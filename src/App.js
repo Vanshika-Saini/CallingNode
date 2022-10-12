@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const URL = "http://localhost:3001/"
+
 
 function App() {
+  const [message, setMessage] = useState("test")
+
+  useEffect(() => {
+    axios.get(URL)
+    .then((response)  => {
+      console.log(response.data)
+      setMessage(response.data.message)
+
+    }).catch(error => {
+      setMessage(error)
+    } )
+  
+  }, [] )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h5>This message was retrieved from the NodeJS server</h5>
+      <p>{message}</p>
     </div>
+    
   );
 }
 
